@@ -12,4 +12,6 @@ port.pipe(parser)
 parser.on('data', line => console.log(`> ${line}`))
 
 console.log("Sending power on command")
-port.write(new Buffer.from([0x80, 0x70, 0xC0, 0x3F]))
+const cmd = new Buffer.from([0x02, 0x04, 0x80, 0x70, 0xC0, 0x3F, (0x70 ^ 0x3F), (0x80 ^ 0xC0)])
+const dgram = 'PCSEND' + cmd
+port.write(dgram)
